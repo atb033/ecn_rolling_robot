@@ -10,3 +10,5 @@ The model was validated in ADAMS.
 Trajectory tracking control of the robot was also performed. 
 
 For more details please go through the project report. (rolling_robot_report.pdf) 
+
+Video: https://www.youtube.com/watch?v=aDLdKx2OYiM

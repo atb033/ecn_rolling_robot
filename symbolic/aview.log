@@ -1,0 +1,54 @@
+! Adams View Adams 2017.2 Student Edition (built Jul 12 2017)
+! Graphics:  OpenGL
+! Enter a command, '?', or 'help'.
+model display model=.MODEL_3D_RR view=all
+! >> model display model=.MODEL_3D_RR view=all
+! VERIFY MODEL: .MODEL_3D_RR
+! 
+!    6 Gruebler Count (approximate degrees of freedom)
+!   11 Moving Parts (not including ground)
+!    4 Translational Joints
+!    6 Fixed Joints
+!    4 Motions
+! 
+! This model has one or more degree of freedom and there are
+! parts without mass properties. Check the following parts to ensure
+! that they are valid without mass properties specified:
+! Part .MODEL_3D_RR.core has no center-of-mass marker
+! Part .MODEL_3D_RR.core has no mass
+! Part .MODEL_3D_RR.spoke4 has no center-of-mass marker
+! Part .MODEL_3D_RR.spoke4 has no mass
+! Part .MODEL_3D_RR.spoke3 has no center-of-mass marker
+! Part .MODEL_3D_RR.spoke3 has no mass
+! Part .MODEL_3D_RR.spoke2 has no center-of-mass marker
+! Part .MODEL_3D_RR.spoke2 has no mass
+! Part .MODEL_3D_RR.spoke1 has no center-of-mass marker
+! Part .MODEL_3D_RR.spoke1 has no mass
+! 
+!    6 Degrees of Freedom for .MODEL_3D_RR
+! 
+! There are no redundant constraint equations.
+! 
+! 
+! Model verified successfully
+view manage orient view=top   up_axis=(.MDI.up_axis) forward_axis=(.MDI.forward_axis)
+view manage orient view=right up_axis=(.MDI.up_axis) forward_axis=(.MDI.forward_axis)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! MODIFY View Window Zoom
+undo begin
+default coordinate_system default_coordinate_system=.MODEL_3D_RR
+view center view=.gui.main.front object = 7.0270738561E-04, -65.6916228962, -120.6272632748
+view zoom view=.gui.main.front zoom = 4.7768595129
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+view manage orient view=top   up_axis=(.MDI.up_axis) forward_axis=(.MDI.forward_axis)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!  SELECT OBJECT
+undo begin
+group modify group=SELECT_LIST object=.MODEL_3D_RR.base
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+

@@ -1,0 +1,675 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24447,        667]
+NotebookOptionsPosition[     23337,        629]
+NotebookOutlinePosition[     23683,        644]
+CellTagsIndexPosition[     23640,        641]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "Constants", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"tetraAngle", " ", "=", " ", 
+     RowBox[{"ArcCos", "[", 
+      FractionBox[
+       RowBox[{"-", "1"}], "3"], "]"}]}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Internal", " ", "angle", " ", "of", " ", "tetrahedron"}], "*)"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Ishell", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Ixx", ",", "0", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "Iyy", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "Izz"}], "}"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"subs", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        SqrtBox["2"], "\[Rule]", "sqrt2"}], ",", 
+       RowBox[{
+        SqrtBox["3"], "\[Rule]", "sqrt3"}], ",", 
+       RowBox[{
+        SqrtBox["6"], "\[Rule]", "sqrt6"}], ",", 
+       RowBox[{
+        SqrtBox[
+         FractionBox["2", "3"]], "\[Rule]", "sqrt2by3"}], ",", 
+       RowBox[{"\[Alpha]", "\[Rule]", "alpha"}], ",", 
+       RowBox[{"\[Beta]", "\[Rule]", "beta"}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "gamma"}], ",", 
+       RowBox[{"\[Omega]x", "\[Rule]", "omx"}], ",", 
+       RowBox[{"\[Omega]y", "\[Rule]", "omy"}], ",", 
+       RowBox[{"\[Omega]z", "\[Rule]", "omz"}], ",", 
+       RowBox[{"\[Omega]dx", "\[Rule]", "omdx"}], ",", 
+       RowBox[{"\[Omega]dy", "\[Rule]", "omdy"}], ",", 
+       RowBox[{"\[Omega]dz", "\[Rule]", "omdz"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"csubs", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Cos", "\[Rule]", "cos"}], ",", 
+       RowBox[{"Sin", "\[Rule]", "sin"}], ",", 
+       RowBox[{"Power", "\[Rule]", "power"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"M", " ", "=", " ", 
+      RowBox[{"Mass", " ", "of", " ", "shell"}]}], ",", " ", 
+     RowBox[{
+      RowBox[{"spoke", " ", "and", " ", "core", "\[IndentingNewLine]", "I"}], 
+      " ", "=", " ", 
+      RowBox[{
+      "Moment", " ", "of", " ", "inertia", " ", "of", " ", "the", " ", 
+       "shell"}]}], ",", " ", "spoke", ",", " ", 
+     RowBox[{
+      RowBox[{"core", "\[IndentingNewLine]", "R"}], " ", "=", " ", 
+      RowBox[{
+      "radius", " ", "of", " ", "the", " ", "shell", "\[IndentingNewLine]", 
+       "r1"}]}], ",", " ", "r2", ",", " ", "r3", ",", " ", 
+     RowBox[{"r4", " ", "=", " ", 
+      RowBox[{
+      "displacement", " ", "of", " ", "mass", " ", "from", " ", "the", " ", 
+       "centre", " ", "of", " ", "the", " ", "sphere"}]}]}], 
+    "\[IndentingNewLine]", "*)"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Rotation", " ", "matrices"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"RotX", "[", "\[Theta]_", "]"}], ":=", " ", 
+     RowBox[{"RotationMatrix", "[", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"RotY", "[", "\[Theta]_", "]"}], ":=", " ", 
+     RowBox[{"RotationMatrix", "[", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"RotZ", "[", "\[Theta]_", "]"}], ":=", " ", 
+     RowBox[{"RotationMatrix", "[", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"RPY", "-", "Matrix"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"RotSphere", "=", 
+     RowBox[{
+      RowBox[{"RotZ", "[", "\[Alpha]", "]"}], ".", 
+      RowBox[{"RotY", "[", "\[Beta]", "]"}], ".", 
+      RowBox[{"RotX", "[", "\[Gamma]", "]"}]}]}], ";"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "Kinematics", "*)"}], 
+  StyleBox["\[IndentingNewLine]", "Section",
+   FontWeight->"Bold"], 
+  RowBox[{"(*", 
+   RowBox[{"Direction", " ", "vectors"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"posVec1", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posVec2", " ", "=", 
+     RowBox[{
+      RowBox[{"RotY", "[", "tetraAngle", "]"}], ".", "posVec1"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posVec3", " ", "=", 
+     RowBox[{
+      RowBox[{"RotZ", "[", 
+       RowBox[{"2", "*", 
+        RowBox[{"Pi", "/", "3"}]}], "]"}], ".", "posVec2"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posVec4", " ", "=", 
+     RowBox[{
+      RowBox[{"RotZ", "[", 
+       RowBox[{"2", "*", 
+        RowBox[{"Pi", "/", "3"}]}], "]"}], ".", "posVec3"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Positions", " ", "vectors", " ", "in", " ", "local", " ", "frame"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pos0S", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "R"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posS1", "=", 
+     RowBox[{"posVec1", "*", "r1"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posS2", "=", 
+     RowBox[{"posVec2", "*", "r2"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posS3", "=", 
+     RowBox[{"posVec3", "*", "r3"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posS4", "=", 
+     RowBox[{"posVec4", "*", "r4"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Position", " ", "vectors", " ", "in", " ", "global", " ", "frame"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pos01", "=", 
+     RowBox[{
+      RowBox[{"pos0S", " ", "+", 
+       RowBox[{"RotSphere", ".", "posS1"}]}], "//", "Simplify"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pos02", "=", 
+     RowBox[{
+      RowBox[{"pos0S", " ", "+", 
+       RowBox[{"RotSphere", ".", "posS2"}]}], "//", "Simplify"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pos03", "=", 
+     RowBox[{
+      RowBox[{"pos0S", " ", "+", 
+       RowBox[{"RotSphere", ".", "posS3"}]}], "//", "Simplify"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pos04", "=", 
+     RowBox[{
+      RowBox[{"pos0S", " ", "+", 
+       RowBox[{"RotSphere", ".", "posS4"}]}], "//", "Simplify"}]}], 
+    ";"}]}]}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pos02", "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0"}], ",", 
+     RowBox[{"\[Gamma]", "\[Rule]", "0"}], ",", 
+     RowBox[{"r2", "\[Rule]", "140"}]}], "}"}]}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.7385161547771525`*^9, 3.7385161947951365`*^9}, {
+  3.7385162342855573`*^9, 3.738516235195123*^9}, {3.738516468387229*^9, 
+  3.738516474424374*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"131.99326582148888`", ",", "0.`", ",", 
+   RowBox[{
+    RowBox[{"-", "46.666666666666664`"}], "+", "R"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.7385161653019905`*^9, 3.738516195811421*^9}, 
+   3.7385162359391346`*^9, {3.7385164690441628`*^9, 3.7385164748596644`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7385162593744774`*^9, 3.7385162600257363`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Center", " ", "of", " ", "mass"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"COM", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"pos01", "+", "pos02", "+", "pos03", "+", "pos04"}], ")"}], 
+      "/", "4"}], "//", "Simplify"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.7361391392816515`*^9, 3.7361391469981923`*^9}, {
+  3.7361395551963215`*^9, 3.736139564517707*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"solr", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Solve", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Join", "[", 
+         RowBox[{"COM", ",", 
+          RowBox[{"{", 
+           RowBox[{"r1", "+", "r2", "+", "r3", "+", "r4"}], "}"}]}], "]"}], 
+        "\[Equal]", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y", ",", "R", ",", 
+          RowBox[{"Rinit", "*", "4"}]}], "}"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"r1", ",", "r2", ",", "r3", ",", "r4"}], "}"}]}], "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "//", "Simplify"}]}], ";"}]], "Input",
+ CellChangeTimes->{
+  3.7361393016803775`*^9, 3.736139535031215*^9, 3.736139570216611*^9, 
+   3.7361406133595543`*^9, {3.736140882310807*^9, 3.736140885409506*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CForm", "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"r1", "/.", "solr"}], ")"}], "/.", "subs"}], "]"}], "/.", 
+  "csubs"}]], "Input",
+ CellChangeTimes->{{3.736139997027263*^9, 3.7361400097274904`*^9}, {
+   3.7361400951930046`*^9, 3.736140127036615*^9}, 3.7361405861656837`*^9, {
+   3.7361406426653175`*^9, 3.7361406660838704`*^9}, 3.736140710833951*^9, 
+   3.7361409007905436`*^9}],
+
+Cell["\<\
+Rinit + 3*y*cos(gamma)*sin(alpha)*sin(beta) + 3*x*sin(alpha)*sin(gamma) + \
+3*cos(alpha)*(x*cos(gamma)*sin(beta) - y*sin(gamma))\
+\>", "Output",
+ CellChangeTimes->{{3.7361400004443455`*^9, 3.7361400105047717`*^9}, {
+   3.7361401041873074`*^9, 3.736140128343886*^9}, 3.7361405868978715`*^9, {
+   3.7361406230794115`*^9, 3.7361406665558434`*^9}, 3.736140711167463*^9, 
+   3.736140901231541*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"subvis", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\[Alpha]", "\[Rule]", "a"}], ",", 
+       RowBox[{"\[Beta]", "\[Rule]", "b"}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "g"}], ",", 
+       RowBox[{"R", "\[Rule]", "295"}], ",", 
+       RowBox[{"x", "\[Rule]", "xx"}], ",", 
+       RowBox[{"y", "\[Rule]", "yy"}], ",", 
+       RowBox[{"Rinit", "\[Rule]", "140"}]}], "}"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"subr", "=", 
+     RowBox[{"solr", "/.", "subvis"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"centre", "=", 
+     RowBox[{"pos0S", "/.", "subvis"}]}], ";", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"p1", "=", 
+     RowBox[{
+      RowBox[{"pos01", "/.", "subvis"}], "/.", "subr"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"p2", "=", 
+     RowBox[{
+      RowBox[{"pos02", "/.", "subvis"}], "/.", "subr"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"p3", "=", 
+     RowBox[{
+      RowBox[{"pos03", "/.", "subvis"}], "/.", "subr"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"p4", "=", 
+     RowBox[{
+      RowBox[{"pos04", "/.", "subvis"}], "/.", "subr"}]}], ";", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"pp1", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"PointSize", "[", "0.05", "]"}], ",", 
+        RowBox[{"Point", "[", "p1", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"pp2", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"PointSize", "[", "0.05", "]"}], ",", 
+        RowBox[{"Point", "[", "p2", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"pp3", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"PointSize", "[", "0.05", "]"}], ",", 
+        RowBox[{"Point", "[", "p3", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"pp4", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"PointSize", "[", "0.05", "]"}], ",", 
+        RowBox[{"Point", "[", "p4", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"line1", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{"centre", ",", "p1"}], "}"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"line2", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{"centre", ",", "p2"}], "}"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"line3", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{"centre", ",", "p3"}], "}"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"line4", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{"centre", ",", "p4"}], "}"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"cm", "=", 
+     RowBox[{"Graphics3D", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"PointSize", "[", "0.05", "]"}], ",", 
+        RowBox[{"Point", "[", 
+         RowBox[{
+          RowBox[{"COM", "/.", "subvis"}], "/.", "subr"}], "]"}]}], "}"}], 
+      "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+     "pp1", ",", "pp2", ",", "pp4", ",", "pp3", ",", "line1", ",", "line2", 
+      ",", "line3", ",", "line4", ",", "cm", ",", 
+      RowBox[{"PlotRange", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "200"}], ",", "200"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "200"}], ",", "200"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "600"}], "}"}]}], "}"}]}]}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", "0"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"-", "2"}], "\[Pi]"}], ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "0"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"-", "2"}], "\[Pi]"}], ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"g", ",", "0"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"-", "2"}], "\[Pi]"}], ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"xx", ",", "0"}], "}"}], ",", 
+     RowBox[{"-", "15"}], ",", "15"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"yy", ",", "0"}], "}"}], ",", 
+     RowBox[{"-", "15"}], ",", "15"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7361393179648557`*^9, 3.736139319015257*^9}, {
+   3.736139349965737*^9, 3.736139379074119*^9}, {3.736139439977076*^9, 
+   3.736139466050747*^9}, 3.736139517252941*^9, {3.736139590429087*^9, 
+   3.7361399268789825`*^9}, {3.7361412748531184`*^9, 3.7361412788690486`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 0, $CellContext`b$$ = 
+    0, $CellContext`g$$ = 0, $CellContext`xx$$ = 0, $CellContext`yy$$ = 0, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`b$$], 0}, (-2) Pi, 2 Pi}, {{
+       Hold[$CellContext`a$$], 0}, (-2) Pi, 2 Pi}, {{
+       Hold[$CellContext`g$$], 0}, (-2) Pi, 2 Pi}, {{
+       Hold[$CellContext`xx$$], 0}, -15, 15}, {{
+       Hold[$CellContext`yy$$], 0}, -15, 15}}, Typeset`size$$ = {
+    320., {213., 219.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`b$12887$$ = 
+    0, $CellContext`a$12888$$ = 0, $CellContext`g$12889$$ = 
+    0, $CellContext`xx$12890$$ = 0, $CellContext`yy$12891$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 0, $CellContext`b$$ = 
+        0, $CellContext`g$$ = 0, $CellContext`xx$$ = 0, $CellContext`yy$$ = 
+        0}, "ControllerVariables" :> {
+        Hold[$CellContext`b$$, $CellContext`b$12887$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$12888$$, 0], 
+        Hold[$CellContext`g$$, $CellContext`g$12889$$, 0], 
+        Hold[$CellContext`xx$$, $CellContext`xx$12890$$, 0], 
+        Hold[$CellContext`yy$$, $CellContext`yy$12891$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`subvis = {$CellContext`\[Alpha] -> \
+$CellContext`a$$, $CellContext`\[Beta] -> $CellContext`b$$, $CellContext`\
+\[Gamma] -> $CellContext`g$$, $CellContext`R -> 
+          295, $CellContext`x -> $CellContext`xx$$, $CellContext`y -> \
+$CellContext`yy$$, $CellContext`Rinit -> 140}; $CellContext`subr = 
+        ReplaceAll[$CellContext`solr, $CellContext`subvis]; \
+$CellContext`centre = 
+        ReplaceAll[$CellContext`pos0S, $CellContext`subvis]; $CellContext`p1 = 
+        ReplaceAll[
+          
+          ReplaceAll[$CellContext`pos01, $CellContext`subvis], \
+$CellContext`subr]; $CellContext`p2 = ReplaceAll[
+          
+          ReplaceAll[$CellContext`pos02, $CellContext`subvis], \
+$CellContext`subr]; $CellContext`p3 = ReplaceAll[
+          
+          ReplaceAll[$CellContext`pos03, $CellContext`subvis], \
+$CellContext`subr]; $CellContext`p4 = ReplaceAll[
+          
+          ReplaceAll[$CellContext`pos04, $CellContext`subvis], \
+$CellContext`subr]; $CellContext`pp1 = Graphics3D[{
+           PointSize[0.05], 
+           Point[$CellContext`p1]}]; $CellContext`pp2 = Graphics3D[{
+           PointSize[0.05], 
+           Point[$CellContext`p2]}]; $CellContext`pp3 = Graphics3D[{
+           PointSize[0.05], 
+           Point[$CellContext`p3]}]; $CellContext`pp4 = Graphics3D[{
+           PointSize[0.05], 
+           Point[$CellContext`p4]}]; $CellContext`line1 = Graphics3D[
+          Line[{$CellContext`centre, $CellContext`p1}]]; $CellContext`line2 = 
+        Graphics3D[
+          Line[{$CellContext`centre, $CellContext`p2}]]; $CellContext`line3 = 
+        Graphics3D[
+          Line[{$CellContext`centre, $CellContext`p3}]]; $CellContext`line4 = 
+        Graphics3D[
+          Line[{$CellContext`centre, $CellContext`p4}]]; $CellContext`cm = 
+        Graphics3D[{
+           PointSize[0.05], 
+           Point[
+            ReplaceAll[
+             
+             ReplaceAll[$CellContext`COM, $CellContext`subvis], \
+$CellContext`subr]]}]; 
+       Show[$CellContext`pp1, $CellContext`pp2, $CellContext`pp4, \
+$CellContext`pp3, $CellContext`line1, $CellContext`line2, $CellContext`line3, \
+$CellContext`line4, $CellContext`cm, 
+         PlotRange -> {{-200, 200}, {-200, 200}, {0, 600}}]), 
+      "Specifications" :> {{{$CellContext`b$$, 0}, (-2) Pi, 2 
+         Pi}, {{$CellContext`a$$, 0}, (-2) Pi, 2 
+         Pi}, {{$CellContext`g$$, 0}, (-2) Pi, 2 
+         Pi}, {{$CellContext`xx$$, 0}, -15, 15}, {{$CellContext`yy$$, 0}, -15,
+          15}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{371., {316., 322.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7361392176500807`*^9, 3.736139319869027*^9, 3.736139380051784*^9, 
+   3.736139466572734*^9, 3.7361395191662426`*^9, 3.7361395936655645`*^9, 
+   3.7361396548268614`*^9, {3.736139703282856*^9, 3.7361397296559534`*^9}, {
+   3.7361397619523344`*^9, 3.7361397711535783`*^9}, {3.736139843279394*^9, 
+   3.736139890568445*^9}, 3.7361399272991114`*^9, 3.7361412796206207`*^9, 
+   3.7361413947606306`*^9, {3.7361414268835735`*^9, 3.736141447296091*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,9,1,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7385161507349377`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,9,2,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.738516150773835*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,9,3,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7385161508107347`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ReplaceAll\\\", \
+\\\"::\\\", \\\"reps\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,9,4,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7385161508346715`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,22,5,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.738516156389818*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,22,6,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.73851615641177*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", \\\"solr\\\", \\\"}\\\"}]\\) is neither a \
+list of replacement rules nor a valid dispatch table, and so cannot be used \
+for replacing.\"",2,22,7,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7385161564426785`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ReplaceAll\\\", \
+\\\"::\\\", \\\"reps\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,22,8,32825568149738219265,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7385161564656153`*^9}]
+}, Open  ]]
+},
+WindowSize->{1520, 781},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2760, 73, 255, "Input"],
+Cell[3321, 95, 1272, 36, 145, "Input"],
+Cell[4596, 133, 2600, 80, 335, "Input"],
+Cell[CellGroupData[{
+Cell[7221, 217, 468, 11, 30, "Input"],
+Cell[7692, 230, 311, 6, 63, "Output"]
+}, Open  ]],
+Cell[8018, 239, 96, 1, 30, "Input"],
+Cell[8117, 242, 467, 12, 50, "Input"],
+Cell[8587, 256, 780, 21, 30, "Input"],
+Cell[CellGroupData[{
+Cell[9392, 281, 421, 10, 30, "Input"],
+Cell[9816, 293, 402, 7, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10255, 305, 5110, 146, 392, "Input"],
+Cell[15368, 453, 5164, 101, 655, "Output"],
+Cell[20535, 556, 347, 7, 23, "Message"],
+Cell[20885, 565, 345, 7, 23, "Message"],
+Cell[21233, 574, 347, 7, 23, "Message"],
+Cell[21583, 583, 343, 7, 21, "Message"],
+Cell[21929, 592, 346, 7, 23, "Message"],
+Cell[22278, 601, 345, 7, 23, "Message"],
+Cell[22626, 610, 348, 7, 23, "Message"],
+Cell[22977, 619, 344, 7, 21, "Message"]
+}, Open  ]]
+}
+]
+*)
+

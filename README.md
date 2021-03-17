@@ -1,17 +1,18 @@
-# ecn_rolling_robot
+# Dynamic Modelling of a 3D rolling robot
 
+This repo consists of the code (mainly in Mathematica and Matlab) written for the dynamic modelling of a rolling robot, which is actuated by a reciprocating mass.
 
-These codes were created for the dynamic modelling of a reciprocating mass type 3D rolling robot. 
+The following configurations of the robot are studied:
+-  reciprocating masses without any compliant element
+-  reciprocating masses with fixed stiffness springs
+-  reciprocating masses with variable stiffness springs
 
-Dynamic models of three robots: (i) without any compliant element, (ii) with fixed stiffness springs, and (iii) with variable stiffness springs were created in MATLAB. 
+The dynamics equations, generated in Mathematica, were validated using ADAMS. Furthermore, we used MATLAB/Simulink to perform the trajectory tracking control of the robot.
 
-The model was validated in ADAMS.
-
-Trajectory tracking control of the robot was also performed. 
-
-For more details please go through the project report. (rolling_robot_report.pdf) 
+Please go through the [project report](rolling_robot_report.pdf) for more details.
 
 # Results
+
 ![Rolling Robot](./output.gif)
 
 [Video link](https://www.youtube.com/watch?v=aDLdKx2OYiM)

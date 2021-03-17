@@ -13,6 +13,8 @@ Please go through the [project report](rolling_robot_report.pdf) for more detail
 
 # Results
 
+## Trajectory tracking control
+
 ![Rolling Robot](./output.gif)
 
 [Video link](https://www.youtube.com/watch?v=aDLdKx2OYiM)
